@@ -1,7 +1,5 @@
 #!/bin/bash
 
-currdir=$(pwd)
-
 orig_repo="$HOME/devel/herecura"
 
 branches=$(cd "$orig_repo"; find -mindepth 1 -maxdepth 1 -type d | grep -v '^.\/\.' | sed -e 's/\.\///')
