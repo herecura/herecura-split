@@ -41,6 +41,7 @@ url = ${url[@]}
 EOT
             # add herecura .gitignore
             cp "$orig_repo"/.gitignore ./
+            echo "*.pkg.tar.?z" >> .gitignore
             git add -A
             git commit -sm "README and .gitignore for split pkg repo"
 
