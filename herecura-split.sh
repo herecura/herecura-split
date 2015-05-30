@@ -2,6 +2,11 @@
 
 orig_repo="$HOME/devel/herecura"
 
+(
+    cd "$orig_repo"
+    git pull
+)
+
 branches=$(cd "$orig_repo"; find -mindepth 1 -maxdepth 1 -type d | grep -v '^.\/\.' | sed -e 's/\.\///')
 
 #echo "${branches[@]}"
