@@ -14,6 +14,14 @@ branches=$(cd "$orig_repo"; find -mindepth 1 -maxdepth 1 -type d | grep -v '^.\/
 for branch in ${branches[@]}; do
     packages=$(cd "$orig_repo/$branch"; find -mindepth 1 -maxdepth 1 -type d | grep -v '^.\/\.' | sed -e 's/\.\///')
 
+    if [[ "$branch" == "stable" ]] || [[ "$branch" == "testing" ]]; then
+        targetbranch="herecura"
+    elif [[ "$branch" == "pre-community" ]]; then
+        targetbranch="blackeagle-pre-community"
+    else
+        targetbranch="master"
+    fi
+
     #echo "${packages[@]}"
 
     for package in ${packages[@]}; do
@@ -51,7 +59,7 @@ EOT
             done
 
             # create a specific branch for the target package repo
-            git branch "herecura-$branch"
+            git branch -m "$targetbranch"
         )
         # remove intermediate folder
         rm -rf "$package-clone"
