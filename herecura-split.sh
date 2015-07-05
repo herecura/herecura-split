@@ -32,7 +32,7 @@ for branch in ${branches[@]}; do
             # filter out the package
             git filter-branch --subdirectory-filter "$branch/$package" HEAD -- --all
             # to reduce the size of .git foler we will rebuild history via patches
-            git format-patch origin
+            git format-patch -o "../$package-patches" origin
         )
         mkdir "$package"
         (
@@ -52,7 +52,7 @@ EOT
             echo "*.pkg.tar.?z" >> .gitignore
 
             # apply the patches to rebuilt history
-            for patch in $(find ../"$package-clone" -name "[0-9][0-9][0-9][0-9]*.patch" | sort -V); do
+            for patch in $(find ../"$package-patches" -name "*.patch" | sort -V); do
                 git am "$patch"
                 mksrcinfo
                 git add -A
@@ -68,5 +68,6 @@ EOT
         )
         # remove intermediate folder
         rm -rf "$package-clone"
+        rm -rf "$package-patches"
     done
 done
