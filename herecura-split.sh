@@ -50,16 +50,21 @@ EOT
             # add herecura .gitignore
             cp "$orig_repo"/.gitignore ./
             echo "*.pkg.tar.?z" >> .gitignore
-            git add -A
-            git commit -sm "README and .gitignore for split pkg repo"
 
             # apply the patches to rebuilt history
             for patch in $(find ../"$package-clone" -name "[0-9][0-9][0-9][0-9]*.patch" | sort -V); do
                 git am "$patch"
+                mksrcinfo
+                git add -A
+                git commit --amend --no-edit
             done
 
             # create a specific branch for the target package repo
             git branch -m "$targetbranch"
+
+            # when archbuild is finished completely to work with split
+            #hub create -d "herecura package $package" -h "http://repo.herecura.eu" herecura/$package
+            #git push -u
         )
         # remove intermediate folder
         rm -rf "$package-clone"
