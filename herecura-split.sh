@@ -63,8 +63,8 @@ EOT
             git branch -m "$targetbranch"
 
             # when archbuild is finished completely to work with split
-            #hub create -d "herecura package $package" -h "http://repo.herecura.eu" herecura/$package
-            #git push -u
+            hub create -d "herecura package $package" -h "http://repo.herecura.eu" herecura/$package
+            git push -u
         )
         # remove intermediate folder
         rm -rf "$package-clone"
