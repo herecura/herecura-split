@@ -53,7 +53,7 @@ EOT
 
             # apply the patches to rebuilt history
             for patch in $(find ../"$package-patches" -name "*.patch" | sort -V); do
-                git am "$patch"
+                git am --exclude=.SRCINFO "$patch"
                 mksrcinfo
                 git add -A
                 git commit --amend --no-edit
